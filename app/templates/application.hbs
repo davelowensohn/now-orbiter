@@ -1,7 +1,18 @@
 <h2 id="title">Stare into the orbiter</h2>
 
+<div class="frontside">
+  Front gobo: {{ image-uploader fileChanged=(action "fileChanged") layer='uploadedImageFront'}}
+</div>
+
+<div class="backside">
+  Back gobo: {{ image-uploader fileChanged=(action "fileChanged") layer='uploadedImageBack'}}
+</div>
+<div class="nag">
+  (800px diameter please)
+</div>
+
 <button type="button" name="button" {{action 'rotateGel'}}>Make it Rain</button><br />
 
-{{now-orbiter}}
+{{now-orbiter uploadedImageFront=uploadedImageFront uploadedImageBack=uploadedImageBack}}
 
 {{outlet}}

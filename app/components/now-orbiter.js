@@ -8,10 +8,22 @@ export default Ember.Component.extend({
   classNames: 'rotator',
   width: 800,
   height: 800,
+  uploadedImageBack: null,
+  uploadedImageFront: null,
 
   didInsertElement: function (){
     this.draw();
   },
+
+  backImageDidUpdate: Ember.observer('uploadedImageBack', function (){
+    console.log('dataDidUpdate! ', this.get('uploadedImageBack'));
+    this.defGobo1.attr("xlink:href", this.get('uploadedImageBack'));
+  }),
+
+  frontImageDidUpdate: Ember.observer('uploadedImageFront', function (){
+    console.log('dataDidUpdate! ', this.get('uploadedImageFront'));
+    this.defGobo2.attr("xlink:href", this.get('uploadedImageFront'));
+  }),
 
   draw: function (){
     var rotator = d3.select(".rotator");
@@ -22,7 +34,7 @@ export default Ember.Component.extend({
 
     var defs = rotator.append("defs");
 
-    var defGobo1 = defs.append("pattern")
+    this.defGobo1 = defs.append("pattern")
       .attr("id", "def-gobo1")
       .attr("x", 0)
       .attr("y", 0)
@@ -33,9 +45,9 @@ export default Ember.Component.extend({
         .attr("y", 0)
         .attr("width", 800)
         .attr("height", 800)
-        .attr("xlink:href", "pinwheel-cw.png");
+        .attr("xlink:href", this.get('uploadedImageBack'));
 
-    var defGobo2 = defs.append("pattern")
+    this.defGobo2 = defs.append("pattern")
       .attr("id", "def-gobo2")
       .attr("x", 0)
       .attr("y", 0)
@@ -46,9 +58,9 @@ export default Ember.Component.extend({
         .attr("y", 0)
         .attr("width", 800)
         .attr("height", 800)
-        .attr("xlink:href", "pinwheel-ccw.png");
+        .attr("xlink:href", this.get('uploadedImageFront'));
 
-    var defBurt = defs.append("pattern")
+    this.defBurt = defs.append("pattern")
       .attr("id", "def-burt")
       .attr("x", 0)
       .attr("y", 0)
@@ -62,11 +74,11 @@ export default Ember.Component.extend({
         .attr("xlink:href", "burt.png");
 
     // Two-tone gel
-    var groupGel = rotator.append("g")
+    this.groupGel = rotator.append("g")
       .attr("id", "group-gel")
       .attr("transform", "translate(400,400)");
 
-    groupGel.append("clipPath")
+    this.groupGel.append("clipPath")
       .attr("id", "cut-off-bottom")
       .append("rect")
         .attr("x", -400)
@@ -74,7 +86,7 @@ export default Ember.Component.extend({
         .attr("width", 800)
         .attr("height", 400);
 
-    groupGel.append("circle")
+    this.groupGel.append("circle")
       .attr("id", "circle-gel")
       .attr("r", 400)
       .attr("cx", 0)
@@ -84,7 +96,7 @@ export default Ember.Component.extend({
       .style("fill", "#f00")
       .style("opacity", 1);
 
-    var groupGobo1 = rotator.append("g")
+    this.groupGobo1 = rotator.append("g")
       .attr("id", "group-gobo1")
       .attr("transform", "translate(400,400)")
       .append("circle")
@@ -105,7 +117,7 @@ export default Ember.Component.extend({
           .attr("dur", "10s")
           .attr("repeatCount", "indefinite");
 
-    var groupGobo2 = rotator.append("g")
+    this.groupGobo2 = rotator.append("g")
       .attr("id", "group-gobo2")
       .attr("transform", "translate(400,400)")
       .append("circle")
@@ -126,7 +138,7 @@ export default Ember.Component.extend({
           .attr("dur", "20s")
           .attr("repeatCount", "indefinite");
 
-    var groupDiffuser = rotator.append("g")
+    this.groupDiffuser = rotator.append("g")
       .attr("id", "group-diffuser")
       .attr("transform", "translate(400,400)")
       .append("circle")
@@ -137,7 +149,7 @@ export default Ember.Component.extend({
         .style("fill", "#fff")
         .style("opacity", 0.1);
 
-    var groupStage = rotator.append("g")
+    this.groupStage = rotator.append("g")
       .attr("id", "group-stage")
       .attr("transform", "translate(0,400)")
       .append("rect")
@@ -146,11 +158,10 @@ export default Ember.Component.extend({
         .attr("height", 400)
         .attr("x", 0)
         .attr("y", 0)
-        .style("opacity", 0.8)
-        .style("fill", "#000");
+        .style("opacity", 1)
+        .style("fill", "#333");
 
-
-    var groupGnome = rotator.append("g")
+    this.groupGnome = rotator.append("g")
       .attr("id", "group-gnome")
       .attr("transform", "translate(200,300)")
       .append("rect")
