@@ -108,7 +108,7 @@ export default Ember.Component.extend({
       .attr("cy", 0)
       .attr("transform", "rotate(0)")
       .attr("clip-path", "url(#cut-off-bottom)")
-      .style("fill", "#f00")
+      .style("fill", "#66f")
       .style("opacity", 1);
 
     this.groupGobo1 = rotator.append("g")
