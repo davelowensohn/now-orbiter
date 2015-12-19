@@ -11,8 +11,15 @@
   (800px diameter please)
 </div>
 
+<button type="button" name="button" {{action 'reverseGobo1'}}>Reverse back gobo</button><br />
+<button type="button" name="button" {{action 'reverseGobo2'}}>Reverse front gobo</button><br />
 <button type="button" name="button" {{action 'rotateGel'}}>Make it Rain</button><br />
 
-{{now-orbiter uploadedImageFront=uploadedImageFront uploadedImageBack=uploadedImageBack}}
+{{now-orbiter uploadedImageFront=uploadedImageFront
+              uploadedImageBack=uploadedImageBack
+              gobo1StartingDegrees=gobo1StartingDegrees
+              gobo1EndingDegrees=gobo1EndingDegrees
+              gobo2StartingDegrees=gobo2StartingDegrees
+              gobo2EndingDegrees=gobo2EndingDegrees}}
 
 {{outlet}}

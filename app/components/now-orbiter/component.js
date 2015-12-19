@@ -11,9 +11,24 @@ export default Ember.Component.extend({
   uploadedImageBack: null,
   uploadedImageFront: null,
 
+  gobo1StartingDegrees: null,
+  gobo1EndingDegrees: null,
+  gobo2StartingDegrees: null,
+  gobo2EndingDegrees: null,
+
   didInsertElement: function (){
     this.draw();
   },
+
+  gobo1RotationDidUpdate: Ember.observer('gobo1StartingDegrees', 'gobo1EndingDegrees', function (){
+    this.groupGobo1.attr("from", this.get('gobo1StartingDegrees'));
+    this.groupGobo1.attr("to", this.get('gobo1EndingDegrees'));
+  }),
+
+  gobo2RotationDidUpdate: Ember.observer('gobo2StartingDegrees', 'gobo2EndingDegrees', function (){
+    this.groupGobo2.attr("from", this.get('gobo2StartingDegrees'));
+    this.groupGobo2.attr("to", this.get('gobo2EndingDegrees'));
+  }),
 
   backImageDidUpdate: Ember.observer('uploadedImageBack', function (){
     console.log('dataDidUpdate! ', this.get('uploadedImageBack'));
@@ -111,8 +126,8 @@ export default Ember.Component.extend({
           .attr("attributeType", "xml")
           .attr("attributeName", "transform")
           .attr("type", "rotate")
-          .attr("from", 360)
-          .attr("to", 0)
+          .attr("from", this.get('gobo1StartingDegrees'))
+          .attr("to", this.get('gobo1EndingDegrees'))
           .attr("begin", 0)
           .attr("dur", "10s")
           .attr("repeatCount", "indefinite");
@@ -132,8 +147,8 @@ export default Ember.Component.extend({
           .attr("attributeType", "xml")
           .attr("attributeName", "transform")
           .attr("type", "rotate")
-          .attr("from", 360)
-          .attr("to", 0)
+          .attr("from", this.get('gobo2StartingDegrees'))
+          .attr("to", this.get('gobo2EndingDegrees'))
           .attr("begin", 0)
           .attr("dur", "20s")
           .attr("repeatCount", "indefinite");
@@ -159,7 +174,7 @@ export default Ember.Component.extend({
         .attr("x", 0)
         .attr("y", 0)
         .style("opacity", 1)
-        .style("fill", "#333");
+        .style("fill", "#999");
 
     this.groupGnome = rotator.append("g")
       .attr("id", "group-gnome")

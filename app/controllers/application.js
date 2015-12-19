@@ -6,12 +6,35 @@ export default Ember.Controller.extend({
   rotationDegrees: 0,
   uploadedImageBack: 'pinwheel-cw.png',
   uploadedImageFront: 'pinwheel-ccw.png',
+  gobo1StartingDegrees: 360,
+  gobo1EndingDegrees: 0,
+  gobo2StartingDegrees: 360,
+  gobo2EndingDegrees: 0,
 
     actions: {
 
       fileChanged: function(uploadedImage, layer){
         this.set(layer, uploadedImage);
-        console.log("fsc");
+      },
+
+      reverseGobo1: function() {
+        if (this.get('gobo1StartingDegrees') === 360) {
+          this.set('gobo1StartingDegrees', 0);
+          this.set('gobo1EndingDegrees', 360);
+        } else {
+          this.set('gobo1StartingDegrees', 360);
+          this.set('gobo1EndingDegrees', 0);
+        }
+      },
+
+      reverseGobo2: function() {
+        if (this.get('gobo2StartingDegrees') === 360) {
+          this.set('gobo2StartingDegrees', 0);
+          this.set('gobo2EndingDegrees', 360);
+        } else {
+          this.set('gobo2StartingDegrees', 360);
+          this.set('gobo2EndingDegrees', 0);
+        }
       },
 
       rotateGel: function() {
