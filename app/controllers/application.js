@@ -3,13 +3,26 @@ import d3 from 'd3';
 
 export default Ember.Controller.extend({
 
-  rotationDegrees: 0,
+  gelRotationDegrees: 0,
   uploadedImageBack: 'pinwheel-cw.png',
   uploadedImageFront: 'pinwheel-ccw.png',
   gobo1StartingDegrees: 360,
   gobo1EndingDegrees: 0,
+  gobo1RotationSeconds: 20,
   gobo2StartingDegrees: 360,
   gobo2EndingDegrees: 0,
+  gobo2RotationSeconds: 10,
+  rainColor: 'rgba(100,100,255,0.7)',
+
+  gobo1Direction: Ember.computed('gobo1StartingDegrees', function() {
+    var directionString = (this.get('gobo1StartingDegrees') === 360) ? 'Counterclockwise' : 'Clockwise';
+    return directionString;
+  }),
+
+  gobo2Direction: Ember.computed('gobo2StartingDegrees', function() {
+    var directionString = (this.get('gobo2StartingDegrees') === 360) ? 'Counterclockwise' : 'Clockwise';
+    return directionString;
+  }),
 
     actions: {
 
@@ -38,13 +51,13 @@ export default Ember.Controller.extend({
       },
 
       rotateGel: function() {
-        var rotationDegrees = (this.get('rotationDegrees') === 180) ? 0 : 180;
-        this.set('rotationDegrees', rotationDegrees);
+        var gelRotationDegrees = (this.get('gelRotationDegrees') === 180) ? 0 : 180;
+        this.set('gelRotationDegrees', gelRotationDegrees);
 
         d3.select('#circle-gel')
           .transition()
           .duration(750)
-          .attr("transform", "rotate(" + rotationDegrees + ")");
+          .attr("transform", "rotate(" + gelRotationDegrees + ")");
       }
     }
 });

@@ -10,15 +10,33 @@ export default Ember.Component.extend({
   height: 800,
   uploadedImageBack: null,
   uploadedImageFront: null,
+  rainColor: null,
 
   gobo1StartingDegrees: null,
   gobo1EndingDegrees: null,
+  gobo1RotationSeconds: null,
   gobo2StartingDegrees: null,
   gobo2EndingDegrees: null,
+  gobo2RotationSeconds: null,
 
   didInsertElement: function (){
     this.draw();
   },
+
+  rainColorDidUpdate: Ember.observer('rainColor', function (){
+    this.gelCircle.style("fill", this.get('rainColor'));
+  }),
+
+
+  gobo1RotationSecondsDidUpdate: Ember.observer('gobo1RotationSeconds', function (){
+    var rotationString = this.get('gobo1RotationSeconds') + 's';
+    this.groupGobo1.attr("dur", rotationString);
+  }),
+
+  gobo2RotationSecondsDidUpdate: Ember.observer('gobo2RotationSeconds', function (){
+    var rotationString = this.get('gobo2RotationSeconds') + 's';
+    this.groupGobo2.attr("dur", rotationString);
+  }),
 
   gobo1RotationDidUpdate: Ember.observer('gobo1StartingDegrees', 'gobo1EndingDegrees', function (){
     this.groupGobo1.attr("from", this.get('gobo1StartingDegrees'));
@@ -101,14 +119,14 @@ export default Ember.Component.extend({
         .attr("width", 800)
         .attr("height", 400);
 
-    this.groupGel.append("circle")
+    this.gelCircle = this.groupGel.append("circle")
       .attr("id", "circle-gel")
       .attr("r", 400)
       .attr("cx", 0)
       .attr("cy", 0)
       .attr("transform", "rotate(0)")
       .attr("clip-path", "url(#cut-off-bottom)")
-      .style("fill", "#66f")
+      .style("fill", this.get('rainColor'))
       .style("opacity", 1);
 
     this.groupGobo1 = rotator.append("g")
@@ -119,7 +137,6 @@ export default Ember.Component.extend({
         .attr("r", 400)
         .attr("cx", 0)
         .attr("cy", 0)
-        .attr("transform", "rotate(180)")
         .style("fill", "url(#def-gobo1)")
         .style("opacity", 1)
         .append("animateTransform")
@@ -129,7 +146,7 @@ export default Ember.Component.extend({
           .attr("from", this.get('gobo1StartingDegrees'))
           .attr("to", this.get('gobo1EndingDegrees'))
           .attr("begin", 0)
-          .attr("dur", "10s")
+          .attr("dur", this.get('gobo1RotationSeconds'))
           .attr("repeatCount", "indefinite");
 
     this.groupGobo2 = rotator.append("g")
@@ -140,7 +157,6 @@ export default Ember.Component.extend({
         .attr("r", 400)
         .attr("cx", 0)
         .attr("cy", 0)
-        .attr("transform", "rotate(180)")
         .style("fill", "url(#def-gobo2)")
         .style("opacity", 1)
         .append("animateTransform")
@@ -150,7 +166,7 @@ export default Ember.Component.extend({
           .attr("from", this.get('gobo2StartingDegrees'))
           .attr("to", this.get('gobo2EndingDegrees'))
           .attr("begin", 0)
-          .attr("dur", "20s")
+          .attr("dur", this.get('gobo1RotationSeconds'))
           .attr("repeatCount", "indefinite");
 
     this.groupDiffuser = rotator.append("g")

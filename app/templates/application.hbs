@@ -2,24 +2,34 @@
 
 <div class="frontside">
   Front gobo: {{ image-uploader fileChanged=(action "fileChanged") layer='uploadedImageFront'}}
+  Rotation seconds: {{input type='number' value=gobo2RotationSeconds}}
+  <button type="button" name="button" {{action 'reverseGobo2'}}>Front: {{gobo2Direction}}</button>
 </div>
 
 <div class="backside">
   Back gobo: {{ image-uploader fileChanged=(action "fileChanged") layer='uploadedImageBack'}}
+  Rotation seconds: {{input type='number' value=gobo1RotationSeconds}}
+  <button type="button" name="button" {{action 'reverseGobo1'}}>Back: {{gobo1Direction}}</button>
 </div>
+
 <div class="nag">
   (800px diameter please)
 </div>
 
-<button type="button" name="button" {{action 'reverseGobo1'}}>Reverse back gobo</button><br />
-<button type="button" name="button" {{action 'reverseGobo2'}}>Reverse front gobo</button><br />
-<button type="button" name="button" {{action 'rotateGel'}}>Make it Rain</button><br />
+<div class="rainbox">
+  <button type="button" name="button" class="rainmaker" {{action 'rotateGel'}}>Make it Rain</button>
+  {{input class="rainbox-input" value=rainColor}}
+</div>
+
 
 {{now-orbiter uploadedImageFront=uploadedImageFront
               uploadedImageBack=uploadedImageBack
+              rainColor=rainColor
               gobo1StartingDegrees=gobo1StartingDegrees
               gobo1EndingDegrees=gobo1EndingDegrees
+              gobo1RotationSeconds=gobo1RotationSeconds
               gobo2StartingDegrees=gobo2StartingDegrees
-              gobo2EndingDegrees=gobo2EndingDegrees}}
+              gobo2EndingDegrees=gobo2EndingDegrees
+              gobo2RotationSeconds=gobo2RotationSeconds}}
 
 {{outlet}}
