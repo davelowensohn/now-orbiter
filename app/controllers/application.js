@@ -12,7 +12,7 @@ export default Ember.Controller.extend({
   gobo2StartingDegrees: 360,
   gobo2EndingDegrees: 0,
   gobo2RotationSeconds: 10,
-  rainColor: 'rgba(100,100,255,0.7)',
+  rainColor: 'rgba(255,255,255,0)',
 
   gobo1Direction: Ember.computed('gobo1StartingDegrees', function() {
     var directionString = (this.get('gobo1StartingDegrees') === 360) ? 'Counterclockwise' : 'Clockwise';

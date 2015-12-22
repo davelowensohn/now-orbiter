@@ -67,6 +67,17 @@ export default Ember.Component.extend({
 
     var defs = rotator.append("defs");
 
+    this.groupDiffuser = rotator.append("g")
+      .attr("id", "group-diffuser")
+      .attr("transform", "translate(400,400)")
+      .append("circle")
+        .attr("id", "circle-diffuser")
+        .attr("r", 400)
+        .attr("cx", 0)
+        .attr("cy", 0)
+        .style("fill", "#fff")
+        .style("opacity", 0.9);
+
     this.defGobo1 = defs.append("pattern")
       .attr("id", "def-gobo1")
       .attr("x", 0)
@@ -168,17 +179,6 @@ export default Ember.Component.extend({
           .attr("begin", 0)
           .attr("dur", this.get('gobo1RotationSeconds'))
           .attr("repeatCount", "indefinite");
-
-    this.groupDiffuser = rotator.append("g")
-      .attr("id", "group-diffuser")
-      .attr("transform", "translate(400,400)")
-      .append("circle")
-        .attr("id", "circle-diffuser")
-        .attr("r", 400)
-        .attr("cx", 0)
-        .attr("cy", 0)
-        .style("fill", "#fff")
-        .style("opacity", 0.1);
 
     this.groupStage = rotator.append("g")
       .attr("id", "group-stage")
